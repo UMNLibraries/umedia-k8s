@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: umedia-redis-cache-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: umedia-redis-cache
+  template:
+    metadata:
+      labels:
+        component: umedia-redis-cache
+    spec:
+      containers:
+        - name: redis-cache
+          image: cfennell/redis_cache:latest
+          ports:
+            - containerPort: 6380

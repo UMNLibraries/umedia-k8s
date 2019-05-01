@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: umedia-sidekiq-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: umedia-sidekiq
+  template:
+    metadata:
+      labels:
+        component: umedia-sidekiq
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+        - name: umedia-sidekiq
+          image: cfennell/umedia_sidekiq
+          envFrom:
+          - configMapRef:
+              name: app-config # Non-secret app configuration
+          - secretRef:
+              name: umedia-secrets

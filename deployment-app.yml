@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: umedia-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: umedia-app
+  template:
+    metadata:
+      labels:
+        component: umedia-app
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+        - name: umedia-app
+          image: cfennell/umedia_app:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+          - configMapRef:
+              name: app-config # Non-secret app configuration
+          - secretRef:
+              name: secret-key-base

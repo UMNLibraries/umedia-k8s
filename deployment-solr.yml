@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: umedia-solr-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: umedia-solr
+  template:
+    metadata:
+      labels:
+        component: umedia-solr
+    spec:
+      containers:
+        - name: umedia-solr
+          image: cfennell/umedia_solr:latest
+          ports:
+            - containerPort: 8983

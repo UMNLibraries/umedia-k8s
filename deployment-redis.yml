@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: umedia-redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: umedia-redis
+  template:
+    metadata:
+      labels:
+        component: umedia-redis
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+        - name: redis
+          image: redis:4.0.10
+          ports:
+            - containerPort: 6379
